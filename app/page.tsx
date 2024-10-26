@@ -18,8 +18,8 @@ export default function Home() {
         </header>
         <Suspense fallback={<div>Загрузка...</div>}>
           <SearchBar />
+          <PokemonList />
         </Suspense>
-        <PokemonList />
         <CameraDetection />
       </div>
     </main>
