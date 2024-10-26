@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Camera, FlipCamera } from "lucide-react";
+import { Camera, CameraIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,7 +16,9 @@ export default function CameraDetection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isStreaming, setIsStreaming] = useState(false);
-  const [facingMode, setFacingMode] = useState<"user" | "environment">("environment");
+  const [facingMode, setFacingMode] = useState<"user" | "environment">(
+    "environment"
+  );
   const [processing, setProcessing] = useState(false);
 
   const startCamera = async () => {
@@ -36,7 +38,7 @@ export default function CameraDetection() {
   const stopCamera = () => {
     if (videoRef.current?.srcObject) {
       const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-      tracks.forEach(track => track.stop());
+      tracks.forEach((track) => track.stop());
       videoRef.current.srcObject = null;
       setIsStreaming(false);
     }
@@ -44,7 +46,7 @@ export default function CameraDetection() {
 
   const switchCamera = () => {
     stopCamera();
-    setFacingMode(prev => prev === "user" ? "environment" : "user");
+    setFacingMode((prev) => (prev === "user" ? "environment" : "user"));
   };
 
   const captureImage = async () => {
@@ -66,8 +68,8 @@ export default function CameraDetection() {
 
     try {
       // Convert canvas to blob
-      const blob = await new Promise<Blob>((resolve) => 
-        canvas.toBlob(blob => resolve(blob!), "image/jpeg", 0.8)
+      const blob = await new Promise<Blob>((resolve) =>
+        canvas.toBlob((blob) => resolve(blob!), "image/jpeg", 0.8)
       );
 
       // Create FormData and append image
@@ -76,9 +78,11 @@ export default function CameraDetection() {
 
       // Here you would typically send the image to your AI service
       // For demo purposes, we'll just show a loading state
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      alert("This is a demo! In a production environment, this would send the image to an AI service for Pokémon recognition.");
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      alert(
+        "This is a demo! In a production environment, this would send the image to an AI service for Pokémon recognition."
+      );
     } catch (error) {
       console.error("Error processing image:", error);
     } finally {
@@ -89,8 +93,8 @@ export default function CameraDetection() {
   return (
     <Dialog onOpenChange={(open) => !open && stopCamera()}>
       <DialogTrigger asChild>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           className="fixed bottom-6 right-6 rounded-full w-14 h-14 p-0 bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white"
         >
           <Camera className="h-6 w-6" />
@@ -113,13 +117,13 @@ export default function CameraDetection() {
               onPlay={() => setIsStreaming(true)}
             />
             <canvas ref={canvasRef} className="hidden" />
-            
+
             {!isStreaming && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <Button onClick={startCamera}>Start Camera</Button>
               </div>
             )}
-            
+
             {isStreaming && (
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
                 <Button
@@ -128,7 +132,7 @@ export default function CameraDetection() {
                   className="rounded-full bg-white/90 backdrop-blur-sm"
                   onClick={switchCamera}
                 >
-                  <FlipCamera className="h-4 w-4" />
+                  <CameraIcon className="h-4 w-4" />
                 </Button>
                 <Button
                   variant="outline"
