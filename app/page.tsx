@@ -1,7 +1,8 @@
-import PokemonList from '@/components/pokemon-list';
-import SearchBar from '@/components/search-bar';
-import CameraDetection from '@/components/camera-detection';
-import { Sparkles } from 'lucide-react';
+import PokemonList from "@/components/pokemon-list";
+import SearchBar from "@/components/search-bar";
+import CameraDetection from "@/components/camera-detection";
+import { Sparkles } from "lucide-react";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -13,11 +14,11 @@ export default function Home() {
             <h1 className="text-4xl font-bold text-white">Pokédex</h1>
             <Sparkles className="w-8 h-8 text-yellow-300" />
           </div>
-          <p className="text-white/90 text-lg">
-            Explore the world of Pokémon
-          </p>
+          <p className="text-white/90 text-lg">Explore the world of Pokémon</p>
         </header>
-        <SearchBar />
+        <Suspense fallback={<div>Загрузка...</div>}>
+          <SearchBar />
+        </Suspense>
         <PokemonList />
         <CameraDetection />
       </div>
